@@ -2,37 +2,40 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Carta Día de la Novia</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: 'Georgia', serif;
       background-color: #fff0f5;
-      overflow: hidden;
       height: 100vh;
+      overflow-x: hidden;
     }
 
     .contenedor {
       position: relative;
-      width: 90%;
+      width: 100%;
       max-width: 500px;
-      margin: 60px auto;
-      height: auto;
-      z-index: 2;
+      margin: 40px auto;
+      padding: 0 10px;
     }
 
     .sobre {
-      position: absolute;
       width: 100%;
-      height: 300px;
+      height: 200px;
       background-color: #ffb6c1;
       border-radius: 10px;
       box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
       cursor: pointer;
       overflow: hidden;
       transition: transform 0.6s ease;
+      position: relative;
       z-index: 3;
     }
 
@@ -64,20 +67,23 @@
     }
 
     .carta {
-      position: absolute;
-      width: 90%;
-      max-width: 500px;
+      position: relative;
+      width: 100%;
       background-color: #ffffff;
       padding: 20px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
       border-radius: 10px;
       opacity: 0;
-      transform: translate(-50%, -50%) scale(0.8);
+      transform: scale(0.8);
       transition: opacity 0.6s ease, transform 0.6s ease;
-      z-index: 1;
+      z-index: 2;
       text-align: center;
-      left: 50%;
-      top: 50%;
+      margin-top: 30px;
+    }
+
+    .carta.abierta {
+      opacity: 1;
+      transform: scale(1);
     }
 
     .carta h1 {
@@ -92,12 +98,23 @@
       margin-bottom: 15px;
     }
 
+    .corazones {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
     .corazones span {
       position: absolute;
       font-size: 1.5em;
       color: #ff1493;
-      animation: flotar 6s linear infinite;
-      pointer-events: none;
+      animation: flotar 6s linear forwards;
+      white-space: nowrap;
     }
 
     @keyframes flotar {
@@ -120,6 +137,10 @@
       }
       .carta p {
         font-size: 0.95em;
+      }
+
+      .sobre {
+        height: 180px;
       }
     }
   </style>
@@ -154,21 +175,24 @@
   <div class="corazones"></div>
 
   <script>
+    let corazonesActivos = false;
+
     function abrirCarta() {
       const sobre = document.querySelector('.sobre');
       const carta = document.getElementById('carta');
 
       sobre.style.transform = 'scale(0)';
-      carta.style.opacity = '1';
-      carta.style.transform = 'translate(-50%, -50%) scale(1)';
+      carta.classList.add('abierta');
 
-      // Iniciar corazones flotando
+      // Evitar múltiples intervalos
+      if (corazonesActivos) return;
+      corazonesActivos = true;
+
       setInterval(() => {
         const corazones = document.querySelector('.corazones');
         const span = document.createElement('span');
         span.textContent = '💖';
         span.style.left = Math.random() * window.innerWidth + 'px';
-        span.style.top = window.innerHeight + 'px';
         corazones.appendChild(span);
 
         setTimeout(() => {
