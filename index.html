@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carta Día de la Novia</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background-color: #fff0f5;
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    .contenedor {
+      position: relative;
+      width: 90%;
+      max-width: 500px;
+      margin: 60px auto;
+      height: auto;
+      z-index: 2;
+    }
+
+    .sobre {
+      position: absolute;
+      width: 100%;
+      height: 300px;
+      background-color: #ffb6c1;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform 0.6s ease;
+      z-index: 3;
+    }
+
+    .tapa {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background-color: #ff69b4;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+    }
+
+    .cuerpo {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 50%;
+      background-color: #ffc0cb;
+    }
+
+    .texto-sobre {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 1.2em;
+      color: #fff;
+    }
+
+    .carta {
+      position: absolute;
+      width: 90%;
+      max-width: 500px;
+      background-color: #ffffff;
+      padding: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      border-radius: 10px;
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.8);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      z-index: 1;
+      text-align: center;
+      left: 50%;
+      top: 50%;
+    }
+
+    .carta h1 {
+      color: #ff69b4;
+      margin-bottom: 20px;
+      font-size: 1.5em;
+    }
+
+    .carta p {
+      font-size: 1em;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .corazones span {
+      position: absolute;
+      font-size: 1.5em;
+      color: #ff1493;
+      animation: flotar 6s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes flotar {
+      0% {
+        transform: translateY(100vh) scale(0.5);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .carta h1 {
+        font-size: 1.3em;
+      }
+      .carta p {
+        font-size: 0.95em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="contenedor">
+    <div class="sobre" onclick="abrirCarta()">
+      <div class="tapa"></div>
+      <div class="cuerpo"></div>
+      <div class="texto-sobre">Haz clic para abrir</div>
+    </div>
+
+    <div class="carta" id="carta">
+      <h1>🌹 Feliz Día de la Novia, mi amor 🌹</h1>
+      <p><strong>Amor,</strong></p>
+      <p>
+        Te hice esta carta para que ya no seas solo espectadora de lo que siento... 
+        aunque este día no sea oficial, para mí es más que especial, 
+        porque tú lo haces así. Quiero que sepas que te adoro, me encantas, 
+        y que cada día me subís el ánimo aunque no me creas. 
+        Te quiero muchísimo, mi amor. 💖
+      </p>
+      <p>
+        No necesito que el mundo reconozca este día, porque mi corazón ya lo hizo 
+        desde que te conoció.
+      </p>
+      <p><strong>Para mi corazoncito<br>Brayan 💌</strong></p>
+    </div>
+  </div>
+
+  <div class="corazones"></div>
+
+  <script>
+    function abrirCarta() {
+      const sobre = document.querySelector('.sobre');
+      const carta = document.getElementById('carta');
+
+      sobre.style.transform = 'scale(0)';
+      carta.style.opacity = '1';
+      carta.style.transform = 'translate(-50%, -50%) scale(1)';
+
+      // Iniciar corazones flotando
+      setInterval(() => {
+        const corazones = document.querySelector('.corazones');
+        const span = document.createElement('span');
+        span.textContent = '💖';
+        span.style.left = Math.random() * window.innerWidth + 'px';
+        span.style.top = window.innerHeight + 'px';
+        corazones.appendChild(span);
+
+        setTimeout(() => {
+          span.remove();
+        }, 6000);
+      }, 500);
+    }
+  </script>
+</body>
+</html>
